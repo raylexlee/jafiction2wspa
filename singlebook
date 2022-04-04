@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+CONVERT=/usr/bin/ebook-convert
+META=/usr/bin/ebook-meta
+#CONVERT=/Applications/calibre.app/Contents/MacOS/ebook-convert
+#META=/Applications/calibre.app/Contents/MacOS/ebook-meta
+TITLE=${1?"missing book title!"}
+EPUB=$(find $HOME/epub -regex ''.*/$TITLE.epub -print)
+if [ ! -n "$EPUB" ]; then
+exit 1
+fi
+echo $EPUB
+if [ ! -d $TITLE ]; then
+mkdir $TITLE
+fi
+cd $TITLE
+$CONVERT $EPUB  all.txt
+AUTHOR=$(grep ^作者： all.txt | sed 's/^作者：\(.*\)/\1/')
+echo $AUTHOR > author.txt
