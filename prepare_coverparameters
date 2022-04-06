@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 REGEX=${1-\\[編集\\]}
 grep $REGEX converted.txt | nl -n rz -w 3 -s " " > coverparameters.txt 
-node ../getlast_chapter.js > last_chapter.txt
 csplit -k -n 3 converted.txt "/$REGEX/" '{9999}'
 rm xx000
