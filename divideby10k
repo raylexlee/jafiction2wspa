@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+touch coverparameters.txt
+N=1
+C=0
+FILE=001.txt
+touch $FILE
+echo 001 001 >> coverparameters.txt
+while read LINE
+do
+echo $LINE >> $FILE
+C=`expr $C + ${#LINE}`
+if [ $C -gt 7000 ]; then 
+ C=0; N=`expr $N + 1`; NN=$(printf "%03d" $N); FILE=$NN.txt; touch $FILE; echo $NN $NN >> coverparameters.txt 
+fi
+done
