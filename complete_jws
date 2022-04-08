@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
+AUTHOR=梶井基次郎
 BOOK=$(pwd | sed 's#.*/\([^/]*\)#\1#')
 #../prepare_coverparameters 
 ../mov_with 
 ../mk_text_subdir 
 ~/move2jatts 
 cd ~/raylexlee.github.io/jatts
-csplit -n 1 夏目漱石.html /index\.html/
+[ -f $AUTHOR.html ] || ./make_group_html.txt  $AUTHOR
+csplit -n 1 $AUTHOR.html /index\.html/
 ./make_jatextapp_html.txt $BOOK >> xx0
 cat xx1 >> xx0
 rm xx1
-mv xx0 夏目漱石.html 
+mv xx0 $AUTHOR.html 
 cd text/$BOOK
 ../../ja_trans_zh.txt 
 cd $(pwd | sed 's/ja/zh/')
 CURDIR=$(pwd)
 cd ../..
-csplit -n 1 夏目漱石.html /index\.html/
+[ -f $AUTHOR.html ] || ./make_group_html.txt  $AUTHOR
+csplit -n 1 $AUTHOR.html /index\.html/
 ./make_zhtextapp_html.txt $BOOK >> xx0
 cat xx1 >> xx0
 rm xx1
-mv xx0 夏目漱石.html 
+mv xx0 $AUTHOR.html 
 cd $CURDIR
 for i in $(ls [0-9]*); do ~/mstts/zsp $i; done
